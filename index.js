@@ -4,38 +4,39 @@ import urlRoutes from "./src/url.routes.js";
 import cors from "cors";
 import { config } from "dotenv";
 
+// Cargar las variables de entorno
 config();
 
 const app = express();
 
-// Lista de orígenes permitidos
+// Obtenemos la URL del frontend desde las variables de entorno
 const allowedOrigins = [process.env.FRONTEND_URL];
 
-// Opciones de CORS
 const corsOptions = {
   origin: function (origin, callback) {
-    if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
+    if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+      // Permitir si el origen está en la lista de permitidos o si es una solicitud sin origen (como Postman)
       callback(null, true);
     } else {
+      // Bloquear si el origen no está permitido
       callback(new Error("Not allowed by CORS"));
     }
   },
-  // Permitir solicitudes de preflight para métodos y encabezados personalizados
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization'],
-  optionsSuccessStatus: 204 // algunos navegadores antiguos fallan en 204 con CORS
+  credentials: true, // Permitir cookies o credenciales
 };
 
-// Aplicar middleware de CORS a todas las rutas
+// Aplicamos las opciones de CORS
 app.use(cors(corsOptions));
 
 // Middleware para parsear JSON
 app.use(express.json());
 
-// Aplicar las rutas
+// Usamos las rutas
 app.use("/", urlRoutes);
 
-// Definir el puerto correctamente
+// Definimos el puerto
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
