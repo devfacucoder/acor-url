@@ -14,6 +14,7 @@ const allowedOrigins = [process.env.FRONTEND_URL,"https://devfacucoder.github.io
 
 const corsOptions = {
   origin: function (origin, callback) {
+    console.log('Solicitud de origen:', origin);
     if (!origin || allowedOrigins.indexOf(origin) !== -1) {
       // Permitir si el origen está en la lista de permitidos o si es una solicitud sin origen (como Postman)
       callback(null, true);
