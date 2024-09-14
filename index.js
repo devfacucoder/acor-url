@@ -10,13 +10,14 @@ config();
 const app = express();
 
 // Obtenemos la URL del frontend desde las variables de entorno
-const allowedOrigins = [process.env.FRONTEND_URL];
+const allowedOrigins = [process.env.FRONTEND_URL,"https://github.com/devfacucoder/acor-url/blob/main/index.js"];
 
 const corsOptions = {
   origin: function (origin, callback) {
     if (!origin || allowedOrigins.indexOf(origin) !== -1) {
       // Permitir si el origen está en la lista de permitidos o si es una solicitud sin origen (como Postman)
       callback(null, true);
+      
     } else {
       // Bloquear si el origen no está permitido
       callback(new Error("Not allowed by CORS"));
