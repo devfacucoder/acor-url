@@ -10,7 +10,7 @@ config();
 const app = express();
 
 // Obtenemos la URL del frontend desde las variables de entorno
-const allowedOrigins = [process.env.FRONTEND_URL,"https://github.com/devfacucoder/acor-url/blob/main/index.js"];
+const allowedOrigins = [process.env.FRONTEND_URL,"https://devfacucoder.github.io/acortador-url/"];
 
 const corsOptions = {
   origin: function (origin, callback) {
